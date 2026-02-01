@@ -17,7 +17,7 @@ from config.config import (
 )
 from scrapers.job_scraper import (
     LinkedInScraper, StepstoneScraper, XingScraper, IndeedScraper,
-    CompanyWebsiteScraper, GoogleJobsScraper
+    CompanyWebsiteScraper, GoogleJobsScraper, GoogleWebSearchScraper
 )
 from utils.filter_utils import JobFilter, DataProcessor
 from utils.excel_exporter import ExcelExporter, CSVExporter
@@ -80,6 +80,11 @@ class JobFinder:
             retry_delay=CONFIG['retry_delay']
         )
         self.google_scraper = GoogleJobsScraper(
+            timeout=CONFIG['timeout'],
+            retry_attempts=CONFIG['retry_attempts'],
+            retry_delay=CONFIG['retry_delay']
+        )
+        self.google_web_scraper = GoogleWebSearchScraper(
             timeout=CONFIG['timeout'],
             retry_attempts=CONFIG['retry_attempts'],
             retry_delay=CONFIG['retry_delay']
@@ -182,6 +187,11 @@ class JobFinder:
         ])
         self.jobs.extend(self.google_scraper.jobs)
         self.logger.info(f"Found {len(self.google_scraper.jobs)} jobs on Google")
+        
+        self.logger.info("Searching Google Web Search (with site filters)...")
+        self.google_web_scraper.search(hours_back=CONFIG['hours_back'])
+        self.jobs.extend(self.google_web_scraper.jobs)
+        self.logger.info(f"Found {len(self.google_web_scraper.jobs)} jobs via Google Web Search")
         
         self.logger.info(f"Total jobs found from all boards: {len(self.jobs)}")
     

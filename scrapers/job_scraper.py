@@ -448,3 +448,186 @@ class GoogleJobsScraper(JobScraper):
         self.jobs.extend(jobs)
         logger.info(f"Found {len(jobs)} jobs on Google")
         return jobs
+
+
+class GoogleWebSearchScraper(JobScraper):
+    """Scraper for Google Web Search with advanced site filters and date filtering"""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.base_url = "https://www.google.com/search"
+        
+        # Job titles and keywords
+        self.job_keywords = [
+            "AI Engineer",
+            "Artificial Intelligence",
+            "Machine Learning",
+            "Data Scientist",
+            "Software Engineer"
+        ]
+        
+        # Target job boards and sites
+        self.target_sites = [
+            "stepstone.de",
+            "xing.com",
+            "linkedin.com",
+            "indeed.com",
+            "arbeitsagentur.de",
+            "myworkdayjobs.com",
+            "greenhouse.io",
+            "personio.de",
+            "softgarden.io",
+            "join.com",
+            "recruitee.com"
+        ]
+        
+        # Germany locations
+        self.locations = ["Germany", "Deutschland"]
+    
+    def build_search_query(self, job_keyword: str = None) -> str:
+        """Build advanced Google search query with site filters and location"""
+        # Create OR combinations for job keywords
+        job_query = " OR ".join([f'"{kw}"' for kw in self.job_keywords])
+        
+        # Create OR combinations for locations
+        location_query = " OR ".join([f'"{loc}"' for loc in self.locations])
+        
+        # Create OR combinations for target sites
+        site_query = " OR ".join([f"site:{site}" for site in self.target_sites])
+        
+        # Combine all parts
+        full_query = f"({job_query}) ({location_query}) ({site_query})"
+        
+        return full_query
+    
+    def search(self, keywords: List[str] = None, hours_back: int = 24) -> List[Dict]:
+        """
+        Search Google for job postings with site restrictions and date filtering
+        
+        Args:
+            keywords: Optional list of additional keywords (uses defaults if None)
+            hours_back: Filter for jobs posted in last N hours (default: 24)
+        
+        Returns:
+            List of job dictionaries
+        """
+        logger.info(f"Searching Google Web Search for German job postings (last {hours_back} hours)")
+        jobs = []
+        
+        try:
+            # Build the search query
+            search_query = self.build_search_query()
+            
+            # Add time filter for past 24 hours using Google's qdr parameter
+            # qdr:d = past day, qdr:w = past week, qdr:m = past month
+            params = {
+                'q': search_query,
+                'tbs': 'qdr:d',  # Past 24 hours
+                'start': 0
+            }
+            
+            logger.debug(f"Search query: {search_query}")
+            
+            response = self.fetch_page(self.base_url, params=params)
+            if not response:
+                logger.warning("Failed to fetch Google search results")
+                return jobs
+            
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Parse Google search results
+            result_containers = soup.find_all('div', {'class': 'g'})
+            logger.debug(f"Found {len(result_containers)} result containers")
+            
+            for result in result_containers[:50]:  # Limit to first 50 results
+                try:
+                    # Extract link
+                    link_elem = result.find('a')
+                    if not link_elem:
+                        continue
+                    
+                    job_url = link_elem.get('href', '')
+                    if not job_url or job_url.startswith('/'):
+                        continue
+                    
+                    # Extract title
+                    title_elem = result.find('h3')
+                    if not title_elem:
+                        continue
+                    
+                    title = title_elem.text.strip()
+                    
+                    # Extract snippet for additional context
+                    snippet_elem = result.find('span', {'class': 'st'})
+                    snippet = snippet_elem.text.strip() if snippet_elem else ""
+                    
+                    # Try to extract date from snippet
+                    posted_date = self.extract_date_from_snippet(snippet)
+                    
+                    # Extract domain
+                    domain = self.extract_domain(job_url)
+                    
+                    # Create job data
+                    job_data = {
+                        'title': title,
+                        'company': domain,
+                        'url': job_url,
+                        'posted_date': posted_date,
+                        'board': 'Google Web Search',
+                        'location': 'Germany',
+                        'snippet': snippet,
+                    }
+                    
+                    jobs.append(job_data)
+                    logger.debug(f"Extracted job: {title} from {domain}")
+                
+                except Exception as e:
+                    logger.debug(f"Error parsing Google search result: {str(e)}")
+                    continue
+            
+            # Add delay to be respectful to Google
+            time.sleep(2)
+        
+        except Exception as e:
+            logger.error(f"Error in Google Web Search: {str(e)}")
+            return jobs
+        
+        self.jobs.extend(jobs)
+        logger.info(f"Found {len(jobs)} jobs via Google Web Search")
+        return jobs
+    
+    def extract_domain(self, url: str) -> str:
+        """Extract domain/company from URL"""
+        try:
+            from urllib.parse import urlparse
+            domain = urlparse(url).netloc
+            # Remove www. prefix if present
+            if domain.startswith('www.'):
+                domain = domain[4:]
+            return domain
+        except Exception:
+            return "Unknown"
+    
+    def extract_date_from_snippet(self, snippet: str) -> datetime:
+        """Extract date information from search snippet"""
+        try:
+            if not snippet:
+                return None
+            
+            snippet_lower = snippet.lower()
+            
+            # Check for relative time indicators
+            if "posted" in snippet_lower or "posted" in snippet_lower:
+                if "today" in snippet_lower or "heute" in snippet_lower:
+                    return datetime.now()
+                elif "yesterday" in snippet_lower or "gestern" in snippet_lower:
+                    return datetime.now() - timedelta(days=1)
+                elif "hour" in snippet_lower or "stunde" in snippet_lower:
+                    return datetime.now() - timedelta(hours=1)
+                elif "day" in snippet_lower or "tag" in snippet_lower:
+                    return datetime.now() - timedelta(days=1)
+            
+            return None
+        except Exception as e:
+            logger.debug(f"Error extracting date from snippet: {str(e)}")
+            return None

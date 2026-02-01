@@ -10,6 +10,7 @@ A comprehensive Python application to search for entry-level and junior job posi
 - XING
 - Indeed
 - Google Jobs
+- Google Web Search (with advanced site filters)
 - Company Career Pages (60+ German companies)
 
 ✅ **Smart Filtering**
@@ -157,6 +158,10 @@ The application searches:
 - **XING**: German professional network
 - **Indeed**: Global job search
 - **Google Jobs**: Google job search integration
+- **Google Web Search**: Advanced Google search with site filters for major job boards
+  - Searches across: Stepstone, XING, LinkedIn, Indeed, Arbeitsagentur, MyWorkday, Greenhouse, Personio, SoftGarden, Join.com, Recruitee
+  - Filters by: Last 24 hours, Germany/Deutschland location
+  - Job titles: AI Engineer, Artificial Intelligence, Machine Learning, Data Scientist, Software Engineer
 - **Company Websites**: Direct company career pages
 
 ### 2. Smart Filtering
