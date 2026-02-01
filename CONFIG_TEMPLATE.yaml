@@ -1,0 +1,129 @@
+# Job Finder - Configuration Template
+# Copy this file and customize it for your specific needs
+
+## Job Search Keywords
+# Add job titles and position names you want to search for
+JOB_KEYWORDS:
+  - Junior AI Engineer
+  - AI Engineer Entry Level
+  - Data Scientist Junior
+  - Data Scientist Entry Level
+  - ML Engineer Junior
+  - Junior Developer
+  - Software Developer Trainee
+  - Graduate Engineer
+  - Einstiegsposition (German entry-level)
+  - Berufseinsteiger (Career starter - German)
+
+## Technical Keywords to Match
+# Skills and technologies that must appear in job posting
+TECHNICAL_KEYWORDS:
+  - AI
+  - Artificial Intelligence
+  - Machine Learning
+  - ML
+  - Data Science
+  - Python
+  - Software Development
+  - SDE
+  - Backend
+  - Frontend
+  - Full Stack
+  - Web Development
+  - Neural Network
+  - Deep Learning
+  - TensorFlow
+  - PyTorch
+  - Scikit-learn
+
+## Job Level Keywords for Filtering
+# Identifies entry-level positions
+JOB_LEVEL_KEYWORDS:
+  - junior
+  - entry level
+  - entry-level
+  - graduate
+  - trainee
+  - einstieg (German)
+  - anfänger (German)
+  - career starter
+  - no experience required
+
+## German Job Boards to Search
+JOB_BOARDS:
+  - LinkedIn (https://www.linkedin.com/jobs/)
+  - Stepstone (https://www.stepstone.de/)
+  - XING (https://www.xing.com/jobs/)
+  - Indeed (https://de.indeed.com/)
+  - Google Jobs (https://jobs.google.com/)
+
+## Search Parameters
+SEARCH_PARAMETERS:
+  max_results_per_board: 100      # Max jobs per board
+  hours_back: 24                  # Search last 24 hours
+  timeout: 30                     # Request timeout in seconds
+  retry_attempts: 3               # How many times to retry failed requests
+  retry_delay: 5                  # Seconds between retries
+  headless_browser: true          # Use headless browser mode
+
+## Output Settings
+OUTPUT:
+  directory: output               # Where to save Excel files
+  format: xlsx                    # Excel format
+  include_summary: true           # Include summary sheet
+  log_file: job_finder.log        # Log file name
+
+## German States/Regions to Target (All by default)
+LOCATIONS:
+  - Baden-Württemberg
+  - Bayern (Bavaria)
+  - Berlin
+  - Brandenburg
+  - Bremen
+  - Hamburg
+  - Hessen
+  - Mecklenburg-Vorpommern
+  - Niedersachsen
+  - Nordrhein-Westfalen
+  - Rheinland-Pfalz
+  - Saarland
+  - Sachsen
+  - Sachsen-Anhalt
+  - Schleswig-Holstein
+  - Thüringen
+
+## Top German Tech Companies to Search (customize as needed)
+GERMAN_COMPANIES_TO_SEARCH:
+  - SAP
+  - Siemens
+  - BMW
+  - Volkswagen
+  - Deutsche Telekom
+  - Zalando
+  - N26
+  - Flixbus
+  - Celonis
+  - Rasa
+  - Google Germany
+  - Amazon Germany
+  - Microsoft Germany
+  - IBM Germany
+  - Accenture Germany
+  - Deloitte Germany
+
+## Logging Configuration
+LOGGING:
+  level: INFO                     # INFO, DEBUG, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  console_output: true
+  file_output: true
+  file_name: job_finder.log
+
+## Advanced Settings
+ADVANCED:
+  use_selenium: false             # Use Selenium for JavaScript-heavy sites
+  headless_mode: true             # Run browser in headless mode
+  respect_robots_txt: true        # Follow robots.txt rules
+  cache_results: false            # Cache search results
+  deduplicate_results: true       # Remove duplicate job postings
+  rank_by_relevance: true         # Sort results by relevance score
