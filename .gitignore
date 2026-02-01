@@ -1,0 +1,275 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+ENV/
+myenv/
+env/
+.venv
+env.bak/
+venv.bak/
+
+# IDE and Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+.settings/
+*.iml
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+.nose*
+
+# Logs
+*.log
+job_finder.log
+logs/
+
+# Project Specific
+output/*.xlsx
+output/*.csv
+output/*.xls
+job_cache.json
+jobs.db
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+
+# Temporary Files
+*.tmp
+*.temp
+*~
+.~*
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Package Manager
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Project Output Files
+output/
+*.xlsx
+*.csv
+job_finder.log
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+# Configuration Overrides
+config.local.py
+settings.local.py
+
+# Backup Files
+*.bak
+*.backup
+*.orig
+
+# Compiled Files
+*.pyc
+*.pyo
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# # Git
+# .git/
+# .gitignore
+
+# Node (if any frontend dependencies)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Docker
+Dockerfile.local
+docker-compose.local.yml
+
+# System Files
+*.pid
+*.seed
+*.pid.lock
+
+# VS Code
+.vscode/
+launch.json
+settings.json
+extensions.json
+
+# Custom Python
+*.pth
+
+# Scrapy
+.scrapy
+
+# Sphinx
+docs/_build/
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Translations
+*.mo
+*.pot
+
+# Unit Tests
+.unittest/
+
+# Misc
+.cache/
+.*.swp
+.DS_Store
+Thumbs.db
+
+# Personal notes
+notes.md
+todo.md
+PERSONAL_*
+
+
+
+
+#Document files
+*.docx
+*.pdf
+*.odt
+*.md
+*.txt
+*.rtf
+*.tex
+*.pptx
+*.xlsx
+*.csv
+*.xls
+*.tsv
